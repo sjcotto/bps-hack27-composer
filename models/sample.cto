@@ -1,0 +1,38 @@
+/**
+ * 
+ */
+namespace bps.gub.uy
+
+participant Person identified by dni {
+    o String dni
+    o String firstName
+    o String lastName
+    o String email
+}
+
+participant PublicEntity identified by name {
+    o String name
+}
+
+asset Request identified by id {
+  o String id
+  --> Person owner
+  o Boolean bps optional
+  o Boolean dgi optional
+}
+
+transaction BuildRequest {
+    --> Person requester
+    --> Person worker
+    --> Request asset
+    o Double workHours
+    o DateTime startDate
+    o DateTime endDate
+}
+
+transaction BPSApproval {
+    --> Request asset
+}
+transaction DGIApproval {
+    --> Request asset
+}
